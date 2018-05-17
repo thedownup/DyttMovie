@@ -1,0 +1,12 @@
+.footer{
+    color: #666;
+    display: block;
+    padding: 20px 0;
+    font-size: 12px;
+    margin-top: 50px;
+    border-top: 1px solid #DDD;
+    background-color: #EEE;
+    /*top: 2000px;*/
+    bottom: 0;
+    clear: both;
+}

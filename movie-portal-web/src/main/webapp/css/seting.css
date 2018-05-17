@@ -1,0 +1,12 @@
+form {
+    display: block;
+    margin-top: 0em;
+}
+
+input[type="file" i] {
+    -webkit-box-align: baseline;
+        -ms-flex-align: baseline;
+            align-items: baseline;
+    color: inherit;
+    text-align: start;
+}

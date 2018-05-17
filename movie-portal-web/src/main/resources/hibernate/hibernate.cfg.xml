@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+          "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+	<session-factory>
+
+
+		<property name="dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
+		<!-- 	<property name="show_sql">true</property> -->
+		<!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
+		<!-- <property name="hibernate.current_session_context_class">thread</property> -->
+		<!-- 可以将向数据库发送的SQL语句显示出来 -->
+		<!-- <property name="hibernate.show_sql">true</property>
+		<property name="hibernate.format_sql">true</property>
+		<property name="hibernate.use_sql_comments">true</property> -->
+		<!-- 配置二级缓存提供商，注意此处并不是缓存的jar包 -->
+		<!-- <property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</property> -->
+		<!-- <property name="hibernate.temp.use_jdbc_metadata_defaults"> false 
+			</property> -->
+		<!-- 配置哪些类支持缓存，这里主要是显示首页的热门商品，所以Product类支持缓存 -->
+		<!-- <class-cache usage="read-only" class="com.shop.model.Product"/> -->
+		<mapping class="com.movie.pojo.User" />
+		<mapping class="com.movie.pojo.Movie" />
+		<mapping class="com.movie.pojo.Comments" />
+		<mapping class="com.movie.pojo.MovieInfo" />
+		<mapping class="com.movie.pojo.SingleMovie" />
+		<mapping class="com.movie.pojo.MovieFlag" />
+		<mapping class="com.movie.pojo.DouBan" />
+		<mapping class="com.movie.pojo.PrivateMessage" />
+	</session-factory>
+
+</hibernate-configuration>
+

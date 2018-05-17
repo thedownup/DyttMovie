@@ -1,0 +1,120 @@
+p{
+    margin: 0 0 10px;
+    text-indent:2em;
+    color: #666;
+}
+
+.breadcrumb{
+    padding: 2px;
+    background: #FFF;
+    margin-bottom: 5px;
+}
+
+.active{
+
+    color:#777;
+}
+
+.img-thumbnail{
+    padding: 1px;
+    border-radius: 0;
+}
+
+#indextable tr td{
+    font-size: 12px;
+}
+
+#indextable tr td:nth-child(1){
+    padding: 5px;
+    width: 70px;
+    font-weight: bold;
+}
+
+/*按钮组*/
+.btn{
+    border-radius: 3px;
+}
+
+.dyjieshao h2{
+    font-size: 16px;
+    line-height: 1.2;
+    padding: 2px 0 2px 10px;
+    border-left: 4px solid #09C878;
+}
+
+.resource-help{
+    padding: 10px;
+    color: #777;
+}
+
+.resource-help span{
+    margin-top: 10px;
+}
+
+/*电影推荐栏*/
+.movie-recommened{
+    padding: 0 5px;
+}
+
+.movie-recommened h5{
+    font-size: 12px;
+    text-align: center;
+}
+
+/*右侧框*/
+.sidebar{
+    padding-left: 0px;
+    width: 250px;
+    padding-right: 0px;
+}
+
+/*浏览用户*/
+.view-list{
+    padding: 5px 10px;
+    clear: both;
+}
+
+.viewer-list-avatar{
+    padding: 5px;
+    display: inline-block;
+}
+
+.viewer-list-avatar img{
+    display: block;
+    width: 100%;
+}
+
+/*右侧展示栏*/
+.list-item{
+    display: inline-block;
+    width: 20px;
+    color: #FFF;
+    background: red;
+    margin-left: 5px;
+    margin-right: 10px;
+    text-align: center;
+}
+
+.right-text{
+    color: #666;
+    clear: both;
+    font-size: 16px;
+    border-left: 4px solid #dd5862;
+    line-height: 25px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+}
+
+/*评论那块*/
+.info{
+	
+	height: 50px;
+	margin: o auto;
+	display: block;
+	line-height: 50px;
+	background-color: gray;
+	text-align: center;
+	border: 2px dashed green;	
+}
+

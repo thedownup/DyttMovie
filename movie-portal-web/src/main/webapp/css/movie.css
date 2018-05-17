@@ -1,0 +1,77 @@
+a {
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.container {
+	width: 1040px !important;
+}
+
+td, th {
+	display: table-cell;
+}
+
+.tag-box {
+	padding: 0 15px;
+	margin-bottom: 20px;
+}
+
+.tag-span {
+	vertical-align: middle !important;
+	font-weight: bolder;
+	width: 100px;
+}
+
+.tags .tag {
+	display: inline-block;
+	padding: 0.2em 8px;
+	border-radius: 2px;
+	color: #888;
+	line-height: 1.5;
+	font-size: 12px;
+	background-color: #E6E6E6;
+	margin-right: 5px;
+	margin-bottom: 5px;
+}
+
+.tags .tag.active {
+	color: #FFF;
+	background: rgb(95, 170, 254);
+}
+
+.title_a {
+	overflow: hidden;
+	word-break: keep-all;
+	white-space: nowrap;
+	-o-text-overflow: ellipsis;
+	   text-overflow: ellipsis;
+}
+
+.movie-item{
+    padding:10px;
+}
+.movie-item img{
+    width: 100%;
+    height: 265px;
+}
+.movie-item-in{
+}
+.movie-item-in:hover{
+    background: #CCC;
+    box-shadow:0px 2px 5px #CCC;
+    outline:1px solid #DDD;
+}
+.movie-recommened:hover .item-hover,.movie-item-in:hover .item-hover{
+    height: 100%;
+    background-image: url(../image/play-icon.png);
+    background-position:center center;
+}
+.movie-recommened:hover.movie-recommened h5{
+    background:#CCC;
+}
+
+word-break:keep-all;
+white-space:nowrap;
+-o-text-overflow:ellipsis;text-overflow:ellipsis;
+}
+

@@ -1,0 +1,47 @@
+.img-thumbnail {
+    padding: 1px;
+    border-radius: 0;
+}
+
+.subtype {
+    border: 1px solid #DDD;
+    background: #f5f5f5;
+    border-radius: 3px;
+    padding: 2px 8px;
+    margin-left: 10px;
+    font-size: 13px;
+}
+
+.movie-introduce{
+	height:100px;
+	overflow:hidden;
+	line-height: 10px;
+	position: relative;
+    color: #666;
+}
+
+.movie-introduce:after{
+	 content: '...';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 2em;
+    background: #fff;
+    text-align: right;
+}
+
+.result-item {
+    background-color: #FFF;
+    padding: 5px;
+    margin-bottom: 15px;
+}
+
+.pager-bg {
+    font-size: 0;
+    padding: 15px;
+    background: #FFF;
+}
+
+a{
+	cursor: pointer;
+}

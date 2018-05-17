@@ -1,0 +1,94 @@
+div{
+    display: block;
+}
+
+.container{
+    width: 1040px !important;
+}
+
+/*用户背景*/
+.user-zone-cover{
+    margin-bottom: 20px;
+    color: #FFF;
+    position: relative;
+    height: 300px;
+}
+
+.user-portrait {
+    padding-top: 60px;
+    position: absolute;
+    width: 400px;
+    left: 50%;
+    margin-left: -200px;
+    text-align: center;
+    height: 300px;
+}
+
+.user-avatar {
+    width: 80px;
+    margin: 0 auto;
+    display: block;
+}
+
+.user-portrait .user-name {
+    margin-top: 10px;
+    padding: 2px 15px;
+    border-radius: 2px;
+    background: #DDD;
+    display: inline-block;
+    color: #555;
+}
+.modify-cover-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 3px 10px;
+    background: #DDD;
+    color: #000;
+    border-top-left-radius: 3px;
+}
+
+/*浏览过的电影*/
+.like-list{
+    padding: 5px;
+}
+
+.item-hover {
+    width: 100%;
+    font-size: 0;
+    background: #000 no-repeat 10px 100px;
+    opacity: 0.5;
+    filter: progid:DXImageTransform.Microsoft.Alpha(opacity=50);
+    position: absolute;
+    top: 0;
+    height: 0;
+}
+.hdtag {
+    background: #09C878;
+}
+
+.qtag {
+    padding: 0 3px;
+    color: #FFF;
+    font-size: 12px;
+    right: 0px;
+    bottom: 0px;
+    position: absolute;
+    border: none;
+}
+
+.meta h4, .meta h1 {
+    width: 100%;
+    height: 17px;
+    line-height: 17px;
+    font-size: 14px;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.list-group .list-group-item {
+    padding: 8px 10px;
+    border-radius: 0;
+}

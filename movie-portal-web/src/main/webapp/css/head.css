@@ -1,0 +1,85 @@
+nav{
+    display: block;
+}
+
+/*欢迎的*/
+.welcomePanel{
+    padding: 5px 0;
+    border-bottom: 1px solid #DDD;
+}
+
+.container{
+    width: 1040px !important;
+    height: 32px;
+    /*background: chartreuse;*/
+}
+.container p{
+    line-height: 32px;
+}
+
+/*第二行*/
+.logo{
+    cursor: pointer;
+    display: inline-block;
+    height: 45px;
+    width: 240px;
+    background: url(../image/head/logo.jpg) #FFF no-repeat;
+}
+
+.navbar-form input{
+    width: 240px !important;
+    border-right: none;
+    border-radius: 0;
+}
+
+/*推荐栏*/
+.header-hot{
+    font-size: 10px;
+    text-align: right;
+    top: 5px;
+}
+
+/*导航栏*/
+.navbar{
+    min-height: 40px;
+    background: #00b3ee;
+    border: none;
+    border-radius: 0;
+}
+.navbar-nav{
+    margin: -2px;
+    display: inline-block;
+}
+
+.navbar-nav > li{
+    float: none;
+    display: inline-block;
+}
+
+.navbar-default{
+    background: #00b3ee !important;
+}
+
+.actives{
+    background-color: skyblue;
+}
+
+.navbar-default .navbar-nav li a{
+    color: #FFF;
+}
+
+.navbar-default .navbar-nav li a:hover{
+    background: #0095bb;
+    color: #FFF;
+}
+
+.active li a:hover{
+    background: #2b542c;
+    color: #FFF;
+}
+
+
+.dropdown-li  li a {
+    font-weight: 500;
+    color: #333;
+}

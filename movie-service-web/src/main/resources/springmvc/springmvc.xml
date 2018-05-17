@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+        http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+	<mvc:annotation-driven />
+	<context:component-scan base-package="com.movie..">     
+   		 <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>  
+	</context:component-scan>  
+	<context:property-placeholder location="classpath:conf/*.properties" />
+	<mvc:resources location="/json/" mapping="/json/**" />
+	<mvc:resources location="/images/" mapping="/images/**" />
+	<mvc:resources location="/css/" mapping="/css/**" />
+	<mvc:resources location="/css/images/" mapping="/css/images**" />
+	<mvc:resources location="/js/" mapping="/js/**" />
+	
+	<!-- 处理请求返回json字符串的乱码问题 -->  
+     <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>application/json;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+	
+	<!-- 配置拦截器 -->
+  	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<mvc:exclude-mapping path="/css/**"/>
+			<mvc:exclude-mapping path="/js/**"/>
+			<mvc:exclude-mapping path="/images/**"/>
+			<mvc:exclude-mapping path="/file/**"/>
+			<mvc:exclude-mapping path="/login"/>
+			<bean class="com.movie.interceptor.LoginInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors> 
+	
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="order" value="0" />
+		<property name="prefix" value="/WEB-INF/html/" />
+		<property name="suffix" value=".jsp" />
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+	</bean>
+	
+	<!-- 配置文件上传类型解析器 multipartResolver-->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	    <!-- 设置上传文件最大尺寸，单位为B -->
+	    <property name="maxUploadSize" value="10485760" />
+	</bean>
+	
+	<!-- <bean id="htmlviewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"> 
+		<property name="order" value="1" /> <property name="prefix" value="/WEB-INF/html"/> 
+		<property name="suffix" value=".html" /> <property name="contentType" value="text/html;charset=UTF-8"></property> 
+		</bean> -->
+</beans>

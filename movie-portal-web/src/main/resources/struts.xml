@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE struts PUBLIC  
+    "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"  
+    "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.ognl.allowStaticMethodAccess" value="true"></constant>
+	<constant name="struts.i18n.encoding" value="utf-8"></constant>
+	<!-- 当struts的配置文件修改后,系统是否自动重新加载该文件,默认值为false(生产环境下使用),开发阶段最好打开 -->
+	<constant name="struts.configuration.xml.reload" value="true" />
+	<constant name="struts.multipart.maxSize" value="1000000000" /><!-- 
+		10M -->
+	<!-- <constant name="struts.multipart.maxSize" value="1073741824"></constant> 
+		<constant name="struts.multipart.saveDir" value="E:/temp"></constant> -->
+	<!-- 页面控制 -->
+	<package name="pageController" namespace="/" extends="json-default">
+
+		<interceptors>
+			<interceptor name="userInterceptor" class="userInterceptor"></interceptor>
+			<interceptor-stack name="myStack">
+				<interceptor-ref name="userInterceptor"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+
+		<!-- 404 -->
+		<default-action-ref name="noFindPage"/> 
+		<action name="noFindPage"  class="pageAction" method="error">
+			 <result name="error">/WEB-INF/err/404.jsp</result> 
+		</action> 
+
+		<action name=" " class="pageAction" method="index">
+			<result name="index">/WEB-INF/jsp/index.jsp</result>
+		</action>
+
+		<!-- 登出,个人主页,个人设置 -->
+		<action name="user_*" class="userAction" method="{1}">
+			<result name="{1}">/WEB-INF/user/{1}.jsp</result>
+			<result name="successin" type="redirect">index</result>
+			<result name="successup" type="redirect">signin</result>
+			<result name="false">/WEB-INF/jsp/{1}.jsp</result>
+			<result name="signout" type="redirect">index</result>
+			<allowed-methods>signout,zhuye,setting</allowed-methods>
+		</action>
+
+		<!-- 进入个人设置页面等 -->
+		<action name="user*" class="userAction" method="{1}">
+			<interceptor-ref name="myStack"></interceptor-ref>
+			<result name="{1}">/WEB-INF/user/{1}.jsp</result>
+			<result name="false" type="redirect">index</result>
+			<allowed-methods>zhuye,setting,sixin</allowed-methods>
+		</action>
+
+		<!-- 发送邮件 ,验证邮件 -->
+		<action name="*_Mail" class="userAction" method="{1}">
+			<result type="json">
+				<param name="root">jsonData</param>
+			</result>
+			<allowed-methods>sendMail,validationMail</allowed-methods>
+		</action>
+
+		<!-- 修改资料，和账号  登陆和注册-->
+		<action name="*_change" class="userAction" method="{1}">
+			<result type="json">
+				<param name="root">jsonData</param>
+			</result>
+			<allowed-methods>updateUser,updatePassword,signup,signin</allowed-methods>
+		</action>
+
+		<action name="*" class="pageAction" method="{1}">
+			<result name="{1}">/WEB-INF/jsp/{1}.jsp</result>
+			<!-- 设置一页显示多少个 -->
+			<param name="num">40</param>
+			<allowed-methods>movie,index,tv,douban250,hotest,signin,signup,otherzhuye</allowed-methods>
+		</action>
+
+		<!-- 用来显示电影的详细信息 -->
+		<action name="movieinfo" class="com.movie.actionimpl.MovieInfoAction"
+			method="showMovieInfo">
+			<result name="success">/WEB-INF/jsp/movieShow.jsp</result>
+			<result name="error">/WEB-INF/err/404.jsp</result>
+			<allowed-methods>showMovieInfo</allowed-methods>
+		</action>
+
+		<!-- 搜索框 -->
+		<action name="search" class="searchAction" method="search">
+			<result name="success">/WEB-INF/jsp/search.jsp</result>
+			<param name="num">10</param>
+		</action>
+
+		<!--  注册和登陆的验证码 -->
+		<action name="createlsImage" class="userValidateAction">
+			<result name="success" type="stream">
+				<param name="contentType">image/jpeg</param>
+				<param name="inputName">inputStream</param>
+			</result>
+		</action>
+		
+		<!-- 验证码 -->
+		<action name="createImage" class="validateAction">
+			<result name="success" type="stream">
+				<param name="contentType">image/jpeg</param>
+				<param name="inputName">inputStream</param>
+			</result>
+		</action>
+		
+		
+	</package>
+
+	<package name="file" namespace="/file" extends="json-default">
+		<!-- 文件上传 -->
+		<action name="file_*" class="fileAction" method="{1}">
+			<interceptor-ref name="defaultStack">
+				<param name="fileUpload.maximumSize">1000000000</param>
+			</interceptor-ref>
+			<result type="json">
+				<param name="root">jsonData</param>
+			</result>
+			<allowed-methods>uploadBackground</allowed-methods>
+		</action>
+
+	</package>
+
+	<package name="ajax" namespace="/ajax" extends="json-default">
+		<!-- 评论的获取和发送评论 -->
+		<action name="*_comments" class="commentsAction" method="{1}">
+			<param name="num">5</param>
+			<result type="json">
+				<param name="root">jsonData</param>
+			</result>
+			<allowed-methods>getComments,sendComments,insertFocusUser,removeFocusUser,checkFocusUser</allowed-methods>
+		</action>
+		
+		<!-- 获取私信 -->
+		<action name="*_sixin" class="privateMessageAction" method="{1}">
+			<result type="json">
+				<param name="root">jsonData</param>
+			</result>
+			<allowed-methods>getPrivateMessage,sendMessage,getRecentlyUser,getSystemMessage</allowed-methods>
+		</action>
+
+		<!-- 电影详情小表格 -->
+		<action name="*_movieFlag" class="movieFlagAction" method="{1}">
+			<result type="json">
+				<param name="root">jsonData</param>
+			</result>
+			<allowed-methods>saveMovieFlag,getMovieFlag,getLikeMovies</allowed-methods>
+		</action>
+
+		<!-- reids -->
+		<action name="*_reids" class="redisAction" method="{1}">
+			<result type="json">
+				<param name="root">jsonData</param>
+			</result>
+			<allowed-methods>saveRecentlyMovies,getRecentlyMovies,getRecentlyWatchUser,recordUser</allowed-methods>
+		</action>
+	</package>
+
+</struts>  
