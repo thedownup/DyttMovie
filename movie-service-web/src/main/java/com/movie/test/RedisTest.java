@@ -13,6 +13,8 @@ import com.movie.reids.HotMovieRedis;
 import com.movie.reids.RollingRedis;
 import com.movie.until.JsonUtils;
 
+import redis.clients.jedis.JedisPool;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/spring/*.xml"})
 public class RedisTest {
@@ -21,6 +23,8 @@ public class RedisTest {
 	private RollingRedis rollingRedis;
 	@Autowired
 	private HotMovieRedis hotMovieRedis;
+	@Autowired
+	private JedisPool jedisPool;
 	
 	@Test
 	public void testSave(){
@@ -55,11 +59,11 @@ public class RedisTest {
 	
 	@Test
 	public void testHotMovie(){
-		for (int i = 0; i < 1; i++) {
+		for (double i = 0; i < 50; i++) {
 			
 			HotMovie hotMovie = new HotMovie();
-			hotMovie.setId(2);
-			hotMovie.setScore("55");
+			hotMovie.setId(Integer.valueOf(String.valueOf(i)));
+			hotMovie.setScore(String.valueOf(i));
 			hotMovie.setMovieName("11");
 			hotMovie.setMovie(false);
 			hotMovie.setYear("");
@@ -89,5 +93,21 @@ public class RedisTest {
 		System.out.println(JsonUtils.objectToJson(hotMovie));
 		
 		hotMovieRedis.deleteHotMovie(hotMovie);
+	}
+	
+	@Test
+	public void test(){
+		jedisPool.getResource().zremrangeByRank("HotMovie", 2, 3) ;
+	}
+	
+	@Test
+	public void testRedis(){
+		jedisPool.getResource().set("sssss"+":"+"ass", "c");
+		System.err.println(jedisPool.getResource().get("sssss"+":"+"ass"));
+	}
+	
+	@Test
+	public void test4(){
+		jedisPool.getResource().del("RM"+String.valueOf("6"));
 	}
 }

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.movie.pojo.MResult;
 import com.movie.pojo.User;
+import com.movie.reids.RedisHelper;
 import com.movie.service.UserService;
 import com.movie.until.UserValidation;
 
@@ -35,6 +36,8 @@ public class UserController {
 	private String touXian;
 	@Value("${beijin}")
 	private String beiJin;
+	@Autowired
+	private RedisHelper redisHelper;
 	@Autowired
 	private UserService userService;
 
@@ -55,6 +58,10 @@ public class UserController {
 	public MResult deleteUserById(int id){
 		try {
 			userService.deleteById(id);
+			//删除redis近期访问的记录
+			redisHelper.del("RM"+id);
+			//删除最近访问记录
+			
 			return MResult.build("删除成功");
 		} catch (Exception e) {
 			return MResult.build("删除失败");

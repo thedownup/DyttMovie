@@ -32,8 +32,8 @@ import redis.clients.jedis.JedisPool;
 @Controller
 public class UserAction extends BaseAction<User>{
 
+	private static final long serialVersionUID = 1L;
 	private final static Logger logger = Logger.getLogger(UserAction.class);
-
 	
 	private String username;
 	private String token;
@@ -43,8 +43,6 @@ public class UserAction extends BaseAction<User>{
 	public File file;// 上传文件
 	public String fileContentType;// 上传文件类型
 	public String fileFileName;// 上传文件名
-
-
 
 	@Value("${PATHICONIMG}")
 	private String PATHICONS;
@@ -190,6 +188,9 @@ public class UserAction extends BaseAction<User>{
 	public String sixin(){
 
 		User user = (User) session.get("user");
+		if (user == null) {
+			return "false";
+		}
 		
 		List<User> recentlyUser = privateMessageService.getRecentlyUser(user.getId());
 		//取出聊天过的对象
@@ -298,6 +299,12 @@ public class UserAction extends BaseAction<User>{
 	public String updatePassword() {
 
 		try {
+			//判断密码是否符合要求
+			if (newPassword != null && newPassword.length() < 6) {
+				jsonData = "密码要大于等于6位";
+				return Action.SUCCESS;
+			}
+			
 			User user = userService.getByName(((User) session.get("user")).getUserName());
 			if (DigestUtils.md5DigestAsHex(model.getPassWord().getBytes()).equals(user.getPassWord())) {
 				user.setPassWord(DigestUtils.md5DigestAsHex(newPassword.split(",")[0].trim().getBytes()));

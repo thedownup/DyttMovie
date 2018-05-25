@@ -194,9 +194,13 @@ public class HibernateTest {
 	
 	@Test
 	public void testSearch(){
-		NObject nObject = movieDao.getMovies(1, 11, "警察");
+		NObject nObject = movieDao.getMovies(1, 11, "肖申克的救赎");
 		List<Movie> movies = (List<Movie>) nObject.getObjects();
-		System.out.println(movies.get(0).getMovieInfo().getComments());
+		
+		for (Movie movie : movies) {
+			System.err.println(movie.toString());
+		}
+		
 	}
 	
 	@Test
@@ -344,13 +348,13 @@ public class HibernateTest {
 	
 	@Test
 	public void testPrivateMessage(){
-		List<User> recentlyUser = privateMessageDao.getRecentlyUser(218);
+		List<User> recentlyUser = privateMessageDao.getRecentlyUser(1);
 		System.out.println(recentlyUser.get(0).toString());
 	}
 	
 	@Test
 	public void testPrivateMessage2(){
-		List<PrivateMessage> privateMessage = privateMessageDao.getPrivateMessage(218, 237);
+		List<PrivateMessage> privateMessage = privateMessageDao.getPrivateMessage(1, 8);
 		privateMessage.forEach((a) -> System.out.println(a.toString()));
 	}
 	

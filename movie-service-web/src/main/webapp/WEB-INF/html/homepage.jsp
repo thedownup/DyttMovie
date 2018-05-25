@@ -9,6 +9,8 @@
 			class="easyui-linkbutton" iconCls="icon-edit" onclick="openEdit()"
 			plain="true">修改</a> <a href="#" class="easyui-linkbutton"
 			iconCls="icon-remove" onclick="remove()" plain="true">删除</a>
+				<a href="#" class="easyui-linkbutton" 
+			 onclick="refresh()" plain="true">刷新</a>
 	</div>
 
 	<!--添加滚动-->
@@ -62,7 +64,7 @@
 		function init(page, num) {
 			$('#dgrl').datagrid({
 				url : './rolling/get',
-				pagination : true,
+				pagination : false,
 				rownumbers : true,
 				showFooter : true,
 				resize : true,
@@ -221,6 +223,10 @@
 			$("#save_rolling").dialog('close');
 		}
 		
+			
+		function refresh(){
+			$('#dgrl').datagrid("reload");
+		}
 	</script>
 </body>
 </html>

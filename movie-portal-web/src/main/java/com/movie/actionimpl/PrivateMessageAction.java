@@ -40,11 +40,6 @@ public class PrivateMessageAction extends ActionSupport{
 		return Action.SUCCESS;
 	}
 	
-/*	public String getRecentlyUser(int uid){
-		
-		return Action.SUCCESS;
-	}*/
-	
 	public String getSystemMessage(){
 		
 		List<PrivateMessage> systemMessage = privateMessageService.getSystemMessage();

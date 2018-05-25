@@ -24,7 +24,7 @@
 <div class="message warning">
 <div class="inset">
 	<div class="login-head">
-		<h1>Login Form</h1>
+		<h1>电影天堂管理系统登陆</h1>
 		 <div class="alert-close"> </div> 			
 	</div>
 		<form method="post" action="login">

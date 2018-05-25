@@ -8,7 +8,8 @@
 			onclick="openAdd()" plain="true">添加</a> <a href="#"
 			class="easyui-linkbutton" iconCls="icon-edit" onclick="openEdit()"
 			plain="true">修改</a> <a href="#" class="easyui-linkbutton"
-			iconCls="icon-remove" onclick="remove()" plain="true">删除</a>
+			iconCls="icon-remove" onclick="remove()" plain="true">删除</a> <a
+			href="#" class="easyui-linkbutton" onclick="refresh()" plain="true">刷新</a>
 	</div>
 
 	<table id="dghm" style="width:100%"></table>
@@ -18,7 +19,7 @@
 		data-options="closed:true,iconCls:'icon-save' ,buttons:[{text:'Save', handler:function(){hmSave()}},{text:'Close',handler:function(){mClose()}}]"
 		style="width:500px; padding:10px;">
 		<form id="save_hotmovie_form" method="post">
-			<table >
+			<table>
 				<tr>
 					<td width="60" align="right">电影id:</td>
 					<td><input type="text" name="id"
@@ -30,8 +31,8 @@
 						class="wu-text easyui-validatebox" /></td>
 				</tr>
 			</table>
-				<tr > 
-				</tr>
+			<tr>
+			</tr>
 		</form>
 	</div>
 
@@ -42,25 +43,28 @@
 		data-options="closed:true,iconCls:'icon-save' ,buttons:[{text:'Save', handler:function(){hmUpdate()}},{text:'Close',handler:function(){mClose()}}]"
 		style="width:500px; padding:10px;">
 		<form id="update_hotmovie_form" method="post">
-			<table >
+			<table>
 				<tr>
 					<td width="60" align="right">热门分数:</td>
-					<td><input type="text" name="newScore"
+					<td><input type="text" name="newScore"  
 						class="wu-text easyui-validatebox" /></td>
 				</tr>
 			</table>
-				<tr > 
-					<td><input type="text" name="id" style="display: none" /></td>
-					<td><input type="text" name="movieName" style="display: none" /></td>
-					<td><input type="text" name="movieImgUrl" style="display: none" /></td>
-					<td><input type="text" name="year" style="display: none" /></td>
-					<td><input type="text" name="hid" style="display: none" /></td>
-					<td><input type="text" name="movie" style="display: none" /></td>
-					<td><input type="text" name="score" style="display: none" /></td>
-				</tr>
+			<tr>
+				<td><input type="text" name="id" style="display: none" /></td>
+				<td><input type="text" name="movieName" style="display: none" /></td>
+				<td><input type="text" name="movieImgUrl" style="display: none" /></td>
+				<td><input type="text" name="year" style="display: none" /></td>
+				<td><input type="text" name="hid" style="display: none" /></td>
+				<td><input type="text" name="movie" style="display: none" /></td>
+				<td><input type="text" name="score" style="display: none" /></td>
+				<td><input type="text" name="clarity" style="display: none" /></td>
+				<td><input type="text" name="type" style="display: none" /></td>
+				<td><input type="text" name="area" style="display: none" /></td>
+			</tr>
 		</form>
 	</div>
-	
+
 
 	<script>
 		$(function() {
@@ -71,9 +75,9 @@
 		function init(page, num) {
 			$('#dghm').datagrid({
 				url : './hotmovie/get',
-				pagination : true,
+				pagination : false,
 				rownumbers : true,
-				showFooter : true,
+				showFooter : false,
 				singleSelect : true,
 				checkbox : true,
 				striped : true,
@@ -115,8 +119,26 @@
 						sortable:true
 					},
 					{
+						field : 'type',
+						title : '隐藏字段',
+						width : 30,
+						hidden : true
+					},
+					{
 						field : 'hid',
 						title : '隐藏字段',
+						width : 30,
+						hidden : true
+					},
+					{
+						field : 'area',
+						title : '隐藏字段',
+						width : 30,
+						hidden : true
+					},
+					{
+						field : 'clarity',
+						title : '清晰度',
 						width : 30,
 						hidden : true
 					},
@@ -131,9 +153,11 @@
 		}
 	
 		/*分页设置*/
+
 		function Initpagination() {
 			var p = $("#dghm").datagrid('getPager');
 			$(p).pagination({
+				showPageList : false,
 				onSelectPage : function(pageNumber, pageSize) {
 					$.ajax({
 						type : "POST",
@@ -145,7 +169,7 @@
 					});
 				}
 			});
-		}
+		} 
 		
 		function remove(){
 			var len = $("#dghm").datagrid("getChecked").length;
@@ -158,6 +182,9 @@
 				var score = $("#dghm").datagrid("getChecked")[0].score;
 				var hid = $("#dghm").datagrid("getChecked")[0].hid;
 				var year = $("#dghm").datagrid("getChecked")[0].year;
+				var type = $("#dghm").datagrid("getChecked")[0].type;
+				var clarity = $("#dghm").datagrid("getChecked")[0].clarity;
+				var area = $("#dghm").datagrid("getChecked")[0].area;
 				$.messager.confirm('确认', '您确认想要删除记录吗？', function(r) {
 					if (r) {
 						$.ajax({
@@ -170,7 +197,10 @@
 								score : score,
 								hid : hid,
 								movie : 'false',
-								year : year
+								year : year,
+								type : type,
+								clarity : clarity,
+								area : area
 							},
 							dataType : "json",
 							success : function(data) {
@@ -201,6 +231,10 @@
 				$("#update_hotmovie_form input[name='year']").val(hotmovie[0].year);
 				$("#update_hotmovie_form input[name='hid']").val(hotmovie[0].hid);
 				$("#update_hotmovie_form input[name='movie']").val(hotmovie[0].movie);
+				$("#update_hotmovie_form input[name='clarity']").val(hotmovie[0].clarity);
+				$("#update_hotmovie_form input[name='newScore']").val(hotmovie[0].score);
+				$("#update_hotmovie_form input[name='type']").val(hotmovie[0].type);
+				$("#update_hotmovie_form input[name='area']").val(hotmovie[0].area);
 				$("#update_hotmovie").dialog({
 					title : '热门修改',
 					modal : true,
@@ -217,6 +251,8 @@
 					$.messager.confirm('提示', "分数不能大于500");
 					return;
 				}
+				
+				
 				$.messager.confirm('提示', "非法分数");
 			} else {
 				$.ajax({
@@ -275,6 +311,15 @@
 			$("#update_hotmovie").dialog('close');
 			$("#save_hotmovie").dialog('close');
 		}
+		
+		function refresh(){
+			$('#dghm').datagrid("reload");
+		}
+		
+		/*是整数，则返回true，否则返回false */ 
+		function isInteger(obj){  
+	  	   return typeof obj === 'number' && obj%1 === 0;    
+		} 
 		
 	</script>
 </body>

@@ -56,6 +56,10 @@ public class MovieFlagAction extends BaseAction<MovieFlag> {
 		return Action.SUCCESS;
 	}
 	
+	/**
+	 * 获得电影三个选项的标记
+	 * @return
+	 */
 	public String getMovieFlag(){
 		
 		try {

@@ -8,15 +8,18 @@
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
 	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
 
-	<!-- redis单机版 -->
+	<!-- redis数据源 -->
+	<bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		<property name="maxIdle" value="${redis.maxIdle}" />
+		<property name="maxTotal" value="${redis.maxActive}" />
+		<property name="maxWaitMillis" value="${redis.maxWait}" />
+		<property name="testOnBorrow" value="${redis.testOnBorrow}" />
+	</bean>
 
-<!-- 	<bean id="jedisClientPool" class="com.e3mall.common.jedis.JedisClientPool">
-		<property name="jedisPool" ref="jedisPool" />
-	</bean> -->
 
 	<bean id="jedisPool" class="redis.clients.jedis.JedisPool">
-	<!-- 	<constructor-arg name="host" value="localhost" />  -->
- 		<constructor-arg name="host" value="101.132.183.157" />
+		<constructor-arg name="poolConfig" ref="poolConfig" /> <!-- 加载jedisPool配置信息 -->  
+		<constructor-arg name="host" value="101.132.183.157" />
 		<constructor-arg name="port" value="6380" />
 	</bean>
 

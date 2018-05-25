@@ -27,6 +27,7 @@ public class MovieDaoImpl extends BaseDaoImpl<Movie> implements MovieDao{
 
 	@Override
 	public NObject getMovies(int page,int num,String q) {
+		
 
 		NObject nObject = new NObject();
 

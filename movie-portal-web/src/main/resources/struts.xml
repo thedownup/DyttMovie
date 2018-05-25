@@ -18,18 +18,26 @@
 	<package name="pageController" namespace="/" extends="json-default">
 
 		<interceptors>
+			<interceptor name="mymethodInterceptor2" class="methodInterceptor2"></interceptor>
 			<interceptor name="userInterceptor" class="userInterceptor"></interceptor>
 			<interceptor-stack name="myStack">
 				<interceptor-ref name="userInterceptor"></interceptor-ref>
 				<interceptor-ref name="defaultStack"></interceptor-ref>
 			</interceptor-stack>
+			<interceptor-stack name="methodInterceptor1">
+				<interceptor-ref name="mymethodInterceptor2">
+					<!-- 指定需要拦截的方法 -->
+					<param name="includeMethods">updateUser,updatePassword</param>
+				</interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
 		</interceptors>
 
 		<!-- 404 -->
-		<default-action-ref name="noFindPage"/> 
-		<action name="noFindPage"  class="pageAction" method="error">
-			 <result name="error">/WEB-INF/err/404.jsp</result> 
-		</action> 
+		<default-action-ref name="noFindPage" />
+		<action name="noFindPage" class="pageAction" method="error">
+			<result name="error">/WEB-INF/err/404.jsp</result>
+		</action>
 
 		<action name=" " class="pageAction" method="index">
 			<result name="index">/WEB-INF/jsp/index.jsp</result>
@@ -61,16 +69,19 @@
 			<allowed-methods>sendMail,validationMail</allowed-methods>
 		</action>
 
-		<!-- 修改资料，和账号  登陆和注册-->
+		<!-- 修改资料，和账号 登陆和注册 -->
 		<action name="*_change" class="userAction" method="{1}">
+			<interceptor-ref name="methodInterceptor1"></interceptor-ref>
 			<result type="json">
 				<param name="root">jsonData</param>
 			</result>
+			<result name="nologin">/WEB-INF/err/nologin.jsp</result>
 			<allowed-methods>updateUser,updatePassword,signup,signin</allowed-methods>
 		</action>
 
 		<action name="*" class="pageAction" method="{1}">
 			<result name="{1}">/WEB-INF/jsp/{1}.jsp</result>
+			<result name="nouser">/WEB-INF/err/no.jsp</result>
 			<!-- 设置一页显示多少个 -->
 			<param name="num">40</param>
 			<allowed-methods>movie,index,tv,douban250,hotest,signin,signup,otherzhuye</allowed-methods>
@@ -90,14 +101,14 @@
 			<param name="num">10</param>
 		</action>
 
-		<!--  注册和登陆的验证码 -->
+		<!-- 注册和登陆的验证码 -->
 		<action name="createlsImage" class="userValidateAction">
 			<result name="success" type="stream">
 				<param name="contentType">image/jpeg</param>
 				<param name="inputName">inputStream</param>
 			</result>
 		</action>
-		
+
 		<!-- 验证码 -->
 		<action name="createImage" class="validateAction">
 			<result name="success" type="stream">
@@ -105,8 +116,7 @@
 				<param name="inputName">inputStream</param>
 			</result>
 		</action>
-		
-		
+
 	</package>
 
 	<package name="file" namespace="/file" extends="json-default">
@@ -120,21 +130,38 @@
 			</result>
 			<allowed-methods>uploadBackground</allowed-methods>
 		</action>
-
 	</package>
 
 	<package name="ajax" namespace="/ajax" extends="json-default">
+
+		<interceptors>
+			<interceptor name="mymethodInterceptor" class="methodInterceptor"></interceptor>
+			<interceptor-stack name="methodInterceptor">
+				<interceptor-ref name="mymethodInterceptor">
+					<!-- 指定不许要拦截的方法 -->
+					<param name="excludeMethods">checkFocusUser,saveMovieFlag,getRecentlyWatchUser</param>
+				</interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+
+		<global-results>
+			<result name="nologin">/WEB-INF/err/nologin.jsp</result>
+		</global-results>
+
 		<!-- 评论的获取和发送评论 -->
 		<action name="*_comments" class="commentsAction" method="{1}">
+			<interceptor-ref name="methodInterceptor"></interceptor-ref>
 			<param name="num">5</param>
 			<result type="json">
 				<param name="root">jsonData</param>
 			</result>
 			<allowed-methods>getComments,sendComments,insertFocusUser,removeFocusUser,checkFocusUser</allowed-methods>
 		</action>
-		
+
 		<!-- 获取私信 -->
 		<action name="*_sixin" class="privateMessageAction" method="{1}">
+			<interceptor-ref name="methodInterceptor"></interceptor-ref>
 			<result type="json">
 				<param name="root">jsonData</param>
 			</result>
@@ -151,6 +178,7 @@
 
 		<!-- reids -->
 		<action name="*_reids" class="redisAction" method="{1}">
+			<interceptor-ref name="methodInterceptor"></interceptor-ref>
 			<result type="json">
 				<param name="root">jsonData</param>
 			</result>

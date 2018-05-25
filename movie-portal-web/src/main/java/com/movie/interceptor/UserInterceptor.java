@@ -16,8 +16,8 @@ public class UserInterceptor extends AbstractInterceptor{
 	@Override
 	public String intercept(ActionInvocation invocation) throws Exception {
 		
-		if (invocation.getAction() instanceof UserAction && ServletActionContext.getRequest().getSession().getAttribute("user") != null
-				|| invocation.getAction() instanceof ValidateAction) {
+		//判断用户是否登录
+		if (invocation.getAction() instanceof UserAction && ServletActionContext.getRequest().getSession().getAttribute("user") != null) {
 			return invocation.invoke();
 		}else {
 			return "false";

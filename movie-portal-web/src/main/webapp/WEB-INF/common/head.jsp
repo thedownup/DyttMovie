@@ -22,7 +22,7 @@
 		<!--logo容器 第二行-->
 		<div class="container"
 			style="padding: 20px 15px; padding-right: 0;height: 95px">
-			<a class="logo pull-left"></a>
+			<a class="logo pull-left" href="./index"></a>
 			<div class="pull-right">
 				<form id="search" action="search" class="navbar-form pull-right" accept-charset="utf-8">
 					<div class="form-group">
@@ -56,6 +56,7 @@
 					<ul class="nav navbar-nav">
 						<li class="dropdown">
 						<a href="#" id="username" class="dropdown-toggle" data-toggle="dropdown" data-name=${session.user.userName}> 
+						${session.user.userName}
 								<span class="caret"></span>
 						</a>
 							<ul class="dropdown-menu dropdown-li" role="menu">
@@ -94,7 +95,6 @@
             var username = $("#username").attr("data-name");
             if($("#username").attr("data-name").length>0){
             	/* 登陆 */
-            	$("#username").text(username);
                 $('#login-before').addClass("hide");
                 $('#login_check').addClass("hide");
                 userflag = true;

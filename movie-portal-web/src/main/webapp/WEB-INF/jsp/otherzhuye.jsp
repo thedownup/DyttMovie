@@ -50,7 +50,7 @@ div {
 						<div class="other-button" style="margin-top: 10px;">
 							<button id="follow" onclick="follow()" type="button" class="btn btn-success btn-sm" onclick="">关注TA</button>
 							<button id="unfollow"  onclick="unfollow()" type="button" class="btn btn-danger btn-sm">取消关注 </button>
-							<a class="btn btn-info btn-sm" href="./usersixin?userName=${ouser.userName}&touXiangImg=${ouser.touXiangImg}&id=${ouser.id}">私聊TA <span class="glyphicon glyphicon-envelope"></span></a>
+							<a id="siliao" onclick="siliao()" class="btn btn-info btn-sm" href="./usersixin?userName=${ouser.userName}&touXiangImg=${ouser.touXiangImg}&id=${ouser.id}">私聊TA <span class="glyphicon glyphicon-envelope"></span></a>
 						</div>
 					</div>
 				</div>
@@ -291,6 +291,10 @@ div {
 			});
 		}
 		
-		
+		function siliao(){
+			if(check_login() == false){
+				alert("清先登录");
+			}		
+		}
 </script>
 </html>

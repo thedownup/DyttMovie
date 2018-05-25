@@ -104,4 +104,10 @@ public class HotMovie implements Serializable {
 		this.year = year;
 	}
 
+	@Override
+	public String toString() {
+		return "HotMovie [hid=" + hid + ", score=" + score + ", id=" + id + ", date=" + date + ", clarity=" + clarity
+				+ ", year=" + year + ", area=" + area + ", type=" + type + ", isMovie=" + isMovie + ", movieName="
+				+ movieName + ", movieImgUrl=" + movieImgUrl + "]";
+	}
 }

@@ -51,7 +51,7 @@ public class UpLoadController {
 			try {
 				return MResult.build(domain+fastDFSClient.uploadFile(file.getBytes(),getFileType(fileName)));
 			} catch (Exception e1) {
-				return MResult.build(e1.getMessage());
+				return MResult.build("上传失败请重试");
 			} 
 		} else {
 			return MResult.build("不支持此类型");

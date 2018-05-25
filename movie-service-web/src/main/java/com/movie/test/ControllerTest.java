@@ -9,6 +9,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.movie.controller.DataController;
+import com.movie.controller.HotMovieController;
+import com.movie.pojo.EasyUIDataGridResult;
+import com.movie.pojo.HotMovie;
 import com.movie.service.DbService;
 import com.movie.service.DouBanService;
 import com.movie.wangye.BaseDyttOrigin;
@@ -34,6 +37,8 @@ public class ControllerTest {
 	private SessionFactory sessionFactory;
 	@Autowired
 	private JiuqiOrigin jiuqiOrigin;
+	@Autowired
+	private HotMovieController hotMovieController;
 	
 	@Test
 	public void testDytt9(){
@@ -92,6 +97,23 @@ public class ControllerTest {
 	@Test
 	public void testJiqi(){
 		dataController.updateJiuQiMovie();
+	}
+	
+	@Test
+	public void addHotmoive(){
+		for (double j = 1; j <= 50; j++) {
+			HotMovie hotMovie = new HotMovie();
+			hotMovie.setScore(j+"");
+			hotMovie.setId((int)j);
+			hotMovieController.saveHotMovie(hotMovie);
+		}
+		hotMovieController.getHotMovies();
+	}
+	
+	@Test
+	public void testHotMovieGet(){
+		EasyUIDataGridResult hotMovies = hotMovieController.getHotMovies();
+		System.out.println(hotMovies.getRows().size());
 	}
 	
 }

@@ -50,11 +50,16 @@ public class MovieInfoAction extends ActionSupport implements RequestAware{
 
 		Movie movie = movieService.getMovieAndMovieInfo(Integer.valueOf(mid));
 		if (movie == null) {
-			logger.info("没有这个id对应的电影");
+			logger.debug("没有这个id对应的电影id="+mid);
 			return Action.ERROR;
 		}
-		if (movie.getType() != null || movie.getType().contains(" ")) {
+		
+		if (movie.getType() != null && movie.getType().contains(" ")) {
 			movie.setType(movie.getType().replaceAll(" ", "/"));
+		}
+		
+		if (movie.getArea() != null && movie.getArea().contains(" ")) {
+			movie.setArea(movie.getArea().replaceAll(" ", "/"));
 		}
 
 		MovieInfo movieInfo = movie.getMovieInfo();

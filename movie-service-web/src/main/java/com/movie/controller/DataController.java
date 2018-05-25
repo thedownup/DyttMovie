@@ -131,9 +131,9 @@ public class DataController {
 			//新的页数
 			int page = jiuqiOrigin.getPage();
 			//上次的页数
-			int beg = pageFlagDao.getLastPage("JIUQI_MOVIE_URL", JIUQI_MOVIE_URL);
+			int beg = pageFlagDao.getLastPage(JIUQI_MOVIE_URL, JIUQI_MOVIE_URL);
 			int updatePage = page - beg;
-			if (page > pageFlagDao.getLastPage("JIUQI_MOVIE_URL", JIUQI_MOVIE_URL)) {
+			if (page > pageFlagDao.getLastPage(JIUQI_MOVIE_URL, JIUQI_MOVIE_URL)) {
 				dbService.update97MovieToDb(1, updatePage);
 				//设置新的值
 				pageFlagDao.setPage(JIUQI_MOVIE_URL, page);
@@ -195,6 +195,17 @@ public class DataController {
 			return MResult.build("合并完毕");
 		} catch (Exception e) {
 			return MResult.build("合并失败"+e.getMessage());
+		}
+	}
+	
+	@RequestMapping("/clearsamelinks")
+	@ResponseBody
+	public MResult clearSameLinks(){
+		try {
+			movieService.clearSameLinks();
+			return MResult.build("清除相同链接完成");
+		} catch (Exception e) {
+			return MResult.build("清除相同链接失败");
 		}
 	}
 	

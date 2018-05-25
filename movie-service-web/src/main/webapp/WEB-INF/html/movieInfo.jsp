@@ -5,7 +5,7 @@
 
 	<div class="wu-toolbar-button" style="background-color: #FAFAFA">
 	<!-- 	<a href="#" class="easyui-linkbutton" iconCls="icon-add" onclick="openAdd()" plain="true">添加</a> --> 
-		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" onclick="openEdit()" plain="true">修改</a> 
+		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" onclick="openEdit1()" plain="true">修改</a> 
 		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" onclick="remove()" plain="true">删除</a> 
 		<input id="search" class="easyui-searchbox" style="width:300px" data-options="menu:'#mm'" />
 		<div id="mm" style="width:150px" >
@@ -277,7 +277,7 @@
 			}
 		}
 		
-		function openEdit(){
+		function openEdit1(){
 			var len = $("#dgmi").datagrid("getChecked").length;
 			var movieInfo = $("#dgmi").datagrid("getChecked");
 			$("#change_movieInfo_form input").each(function(){

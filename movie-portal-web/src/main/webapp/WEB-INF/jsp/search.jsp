@@ -53,7 +53,7 @@ div {
 					<div class="col-xs-2">
 						<a target="_blank" href="./movieinfo?mid=${movie.id}"
 							style="position: relative;display: block"> <img
-							src="${movie.movieImgUrl}" class="img-thumbnail" alt=""> 
+							src="${movie.movieImgUrl}" class="img-thumbnail" onerror="this.onerror=null; this.src='./pmovie/../image/noimage.png'" > 
 							<c:set value="${movie.clarity}" var="clarity"></c:set>
 							<c:if test="${clarity == '高清'}">	<span class="gqtag">高清</span></c:if>
 							<c:if test="${clarity == '超清'}">	<span class="cltag">超清</span></c:if>

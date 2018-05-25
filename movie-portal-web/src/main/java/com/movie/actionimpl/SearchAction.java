@@ -29,8 +29,9 @@ public class SearchAction implements RequestAware{
 	public String search(){
 		
 		if (page == 0) {
-			page++;
+			page = 1;
 		}
+		
 		//没有输入直接跳过
 		if (q == null || q.equals("")) {
 			return "success";
@@ -45,13 +46,10 @@ public class SearchAction implements RequestAware{
 		}
 		
 		List<MovieInfo> movieInfos = new ArrayList<MovieInfo>();
-		List<String> isMovies = new ArrayList<String>();
 		for (Movie movie : movies) {
 			movieInfos.add(movie.getMovieInfo());
 			
 		}
-		
-		
 		
 		request.put("movies", movies);
 		request.put("movieInfos", movieInfos);

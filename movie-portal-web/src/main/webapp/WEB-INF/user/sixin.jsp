@@ -143,7 +143,7 @@
              		//判断发送还是接收
              		if(obj[i].sid != ${session.user.id}){
              			var html = '<div class="pm-list">'+ 
-				        '<a target="_blank" href="./otherzhuye?uid='+obj[i].fid+'" class="pm-author-avatar pm-item-left"><img height="45px" width="45px" src="'+img+'" /></a>'+ 
+				        '<a target="_blank" href="./otherzhuye?uid='+obj[i].sid+'" class="pm-author-avatar pm-item-left"><img height="45px" width="45px" src="'+img+'" /></a>'+ 
 					        '<div class="pm-item pm-item-left">'+ 
 						         '<div class="meta">'+
 						          '<em>'+obj[i].sendDate+'</em>'+

@@ -30,6 +30,7 @@
 	<hr>
 	<h2>合并重复的电影</h2>
 		<div style="margin-right: 15px;display: inline;"><a id="merge" data-click="true" href="#" style="background-color: #EACDCE;" class="easyui-linkbutton" >合并重复的电影</a></div>
+		<div style="margin-right: 15px;display: inline;"><a id="clearsamelinks" data-click="true" href="#" style="background-color: #EACDCE;" class="easyui-linkbutton" >合并相同的链接</a></div>
 	</div>
 	<script type="text/javascript">
 		

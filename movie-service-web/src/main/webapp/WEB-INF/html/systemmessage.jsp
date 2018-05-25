@@ -17,15 +17,17 @@
 
 	<script type="text/javascript">
 	
-		var flag1 = true;
+		var f = true;
 
 		$(function(){
-			if (flag1) {
-				flag1 = false;
+			init();
+			if (f) {
+				f = false;
 				init();
-			}
-			send_message();
+			} 
+ 			init();
 			Initpagination();
+			send_message();
 		});
 		
 		

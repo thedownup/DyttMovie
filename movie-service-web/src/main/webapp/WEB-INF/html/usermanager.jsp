@@ -31,7 +31,7 @@
 				<tr>
 					<td width="60" align="right">生日:</td>
 					<td><input type="text" name="birthday" id="cc"
-						class="wu-text easyui-validatebox easyui-datebox" /></td>
+						class="wu-text easyui-validatebox easyui-datetimebox" /></td>
 				</tr>
 				<tr>
 					<td width="60" align="right">验证状态(0或1):</td>
@@ -88,7 +88,7 @@
 				<tr>
 					<td width="60" align="right">生日:</td>
 					<td><input type="text" name="birthday" id="ccu"
-						class="wu-text easyui-validatebox easyui-datebox" /></td>
+						class="wu-text easyui-validatebox easyui-datetimebox" /></td>
 				</tr>
 				<tr>
 					<td width="60" align="right">验证状态(0或1):</td>
@@ -136,15 +136,15 @@
 
 	<script>
 	
-		var flag1 = true;
+		var flag2 = true;
 		
 		//判断是否该密码的
 		var flag = "false";
 		var oldPassWord = "";
 	
 		$(function() {
-			if (flag1) {
-				flag1 = false;
+			if (flag2) {
+				flag2 = false;
 				init(0, 10);
 			}
 			Initpagination();
@@ -290,7 +290,7 @@
 					modal : true,
 				});
 				/* 初始化日期 */
-				$("#ccu").datebox('setValue',user[0].birthday);	
+				$("#ccu").datetimebox('setValue',user[0].birthday);	
 				$("#change_user").dialog('open');
 			}
 		}

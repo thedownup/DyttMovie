@@ -7,6 +7,8 @@
     <title>电影天堂</title>
     <!-- 新 Bootstrap 核心 CSS 文件 -->
     <link rel="stylesheet" href="./bootstrap-3.3.7/dist/css/bootstrap.css">
+	<!--导入中间主体的css-->
+	<link rel="stylesheet" href="./css/movie.css">
     <!--引入图标-->
     <link rel="stylesheet" href="./css/glyphicons-halflings-regular.svg">
     <!--导入header的css-->
@@ -51,13 +53,13 @@
 	            <c:forEach varStatus="stauts" items="${rollings}" var="rolling">
 	            	<c:if test="${stauts.index == 0}">
 						<div class="item active">
-	                    	<img src="${rolling.bigImageUrl}" alt="...">
+	                    	<a target="_blank" href="./movieinfo?mid=${rolling.mid}" ><img src="${rolling.bigImageUrl}" alt="..."></a>
 		                    <div class="carousel-caption"> </div>
 	              		</div>	            	
 	            	</c:if>
 	            	<c:if test="${stauts.index != 0}">
 	            		<div class="item">
-	                    	<img src="${rolling.bigImageUrl}" alt="...">
+	                    	<a target="_blank" href="./movieinfo?mid=${rolling.mid}" ><img src="${rolling.bigImageUrl}" alt="..." onerror="this.onerror=null; this.src='./../image/noimage.png'"></a>
 		                    <div class="carousel-caption"> </div>
 	              		</div>	    
 	            	</c:if>
@@ -85,31 +87,39 @@
                   	<c:forEach items="${hotMovies}" var="hotMovie" >
 	                  		<!--存放图片链接-->
 	                    <div class="col-xs-1-5 movie-item">
-								<a class="item-a" target="_blank" style="position: relative;display: block" href="./movieinfo?mid=${hotMovie.id}"> <img
-									src="${hotMovie.movieImgUrl}"> <!--清晰度--> <c:set
-										var="clarity" scope="request" value="${hotMovie.clarity}" /> <c:if
-										test="${hotMovie == '高清'}">
-										<span class="cltag">高清</span>
-									</c:if> <c:if test="${hotMovie == '超清'}">
-										<span class="gqtag">超清</span>
-									</c:if>
-								</a>
+							<div class="movie-item-in">	
+									<a class="item-a" target="_blank" style="position: relative;display: block" href="./movieinfo?mid=${hotMovie.id}"> <img
+										src="${hotMovie.movieImgUrl}"> <!--清晰度--> <c:set
+											var="clarity" scope="request" value="${hotMovie.clarity}" /> 
+											<c:choose>
+											<c:when test="${clarity == '高清'}">
+												<span class="cltag">高清</span>
+											</c:when>
+											<c:when test="${clarity == '超清'}">
+												<span class="gqtag">超清</span>
+											</c:when>
+											<c:otherwise>
+												<span class="otag">${clarity}</span>
+											</c:otherwise>
+										</c:choose>
+									</a>
 								<!--列表小简介-->
-								<div class="meta">
-									<a class="title_a" target="_blank" title="${hotMovie.movieName}"
-										style="background-color: transparent">${hotMovie.movieName}</a>
-									<c:set var="score" value="${hotMovie.score}" />
-									<c:if test="${empty  score}">
-										<em style="display: block;">--N/A分</em>
-									</c:if>
-									<c:if test="${not empty score }">
-										<em style="display: block;">--${hotMovie.score}分</em>
-									</c:if>
-									<div class="otherinfo">
-										类型:
-										<c:forTokens items="${hotMovie.type}" delims="/" var="tag">
-											<a target="_blank" href="#" class="movieclass">${tag}</a>
-										</c:forTokens>
+									<div class="meta">
+										<a class="title_a" target="_blank" title="${hotMovie.movieName}"
+											style="background-color: transparent">${hotMovie.movieName}</a>
+										<c:set var="score" value="${hotMovie.score}" />
+										<c:if test="${empty  score}">
+											<em style="display: block;">--N/A分</em>
+										</c:if>
+										<c:if test="${not empty score }">
+											<em style="display: block;">--${hotMovie.score}分</em>
+										</c:if>
+										<div class="otherinfo">
+											类型:
+											<c:forTokens items="${hotMovie.type}" delims="/" var="tag">
+												<a target="_blank" href="#" class="movieclass">${tag}</a>
+											</c:forTokens>
+										</div>
 									</div>
 								</div>
 							</div>

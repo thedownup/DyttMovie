@@ -6,8 +6,6 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import javax.annotation.PostConstruct;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,58 +15,32 @@ import com.movie.pojo.IPMessage;
 import com.movie.until.JsonUtils;
 
 import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
 
 /**
  * @author zjt
  * @Description: redis的常用操作
  */
 @Component
-public class RedisHelper {
+public class RedisHelper extends BaseRedis{
 
 	private static final Logger logger = Logger.getLogger(RedisHelper .class);
 
 	@Autowired
 	private IpFilter ipFilter;
-	@Autowired
-	private JedisPool jedisPool;
-
-	private Jedis jedis;
-
 	private static final String IPMESSAGE = "IPMESSAGE";
-
-	private static final String ROLLINGNAME = "Rolling";
-	private static final String ROLLINGID = "rid";
-
-	private final int MAXNUM = 20;
-	private final long CONNECTTIMEOUT = 10000;
-
-	private synchronized Jedis getJedis(){
-		JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
-		jedisPoolConfig.setMaxTotal(MAXNUM);
-		jedisPoolConfig.setMaxWaitMillis(CONNECTTIMEOUT);
-		return jedisPool.getResource();
-	}
-
-	/**
-	 * 初始化jedis
-	 */
-	@PostConstruct
-	public void init(){
-		jedis = getJedis();
-	}
 
 	/**
 	 * 插入可以用的代理ip
 	 * @param ipMessage
 	 */
 	public void insertIpMessageToRedis(IPMessage ipMessage){
+		Jedis jedis = getJedis();
 		//从池中获取redis
-		jedis.sadd(IPMESSAGE, JsonUtils.objectToJson(ipMessage),JsonUtils.objectToJson(ipMessage));
+		getJedis().sadd(IPMESSAGE, JsonUtils.objectToJson(ipMessage),JsonUtils.objectToJson(ipMessage));
 		//设置过期时间
 		jedis.expire(IPMESSAGE, 60*60*24*7);
 		logger.info("保存了一个ipmessage到redis"+ipMessage.toString());
+		jedis.close();
 	}
 
 	/**
@@ -76,6 +48,7 @@ public class RedisHelper {
 	 * @return
 	 */
 	public IPMessage getIpMessage(){
+		Jedis jedis = getJedis();
 		if (getIpMessageNum() == 0) {
 			return null;
 		}
@@ -83,9 +56,11 @@ public class RedisHelper {
 		List<String> json = jedis.srandmember(IPMESSAGE, 1);
 		logger.info(json);
 		if (json.size() == 0 || json == null) {
+			jedis.close();
 			return null;
 		}
 		IPMessage ipMessage = JsonUtils.jsonToPojo(json.get(0), IPMessage.class);
+		jedis.close();
 		return ipMessage;
 	}
 
@@ -94,10 +69,12 @@ public class RedisHelper {
 	 * @return
 	 */
 	public synchronized long getIpMessageNum(){
+		Jedis jedis = getJedis();
 		return jedis.scard(IPMESSAGE);
 	}
 
 	public void removeProxyIp(String json){
+		Jedis jedis = getJedis();
 		jedis.srem(IPMESSAGE, json);
 	}
 	
@@ -107,6 +84,7 @@ public class RedisHelper {
 	 * @return 代理ip数量
 	 */
 	public void checkProxyIp(){
+		Jedis jedis = getJedis();
 		int count = 0;
 		Set<String> smembers = jedis.smembers(IPMESSAGE);
 		Iterator<String> iterator = smembers.iterator();
@@ -138,9 +116,19 @@ public class RedisHelper {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
-			}    
+			} finally {
+				jedis.close();
+			}
 		}
 	}	
-
-
+	
+	/**
+	 * 删除某个键
+	 * @param name
+	 */
+	public void del(String name){
+		Jedis jedis = getJedis();
+		jedis.del(name);
+		jedis.close();
+	}
 }

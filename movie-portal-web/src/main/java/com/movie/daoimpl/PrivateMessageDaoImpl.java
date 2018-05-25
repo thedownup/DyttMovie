@@ -28,7 +28,7 @@ public class PrivateMessageDaoImpl implements PrivateMessageDao{
 	@Override
 	public List<PrivateMessage> getPrivateMessage(int uid, int fid) {
 		
-		String sql = "SELECT * FROM private_message WHERE uid = :uid AND fid = :fid";
+		String sql = "SELECT * FROM private_message WHERE (uid =:uid and fid = :fid ) or (uid =:fid and fid =:uid)";
 		List<Object[]> list = getSession().createSQLQuery(sql).setParameter("uid", uid)
 			.setParameter("fid", fid).list();
 		
@@ -62,7 +62,7 @@ public class PrivateMessageDaoImpl implements PrivateMessageDao{
 	@Override
 	public List<User> getRecentlyUser(int uid) {
 		
-		String sql = "SELECT m.username,m.touxiangimg,m.id FROM movie_user m WHERE m.id IN(SELECT fid FROM private_message WHERE uid = :uid)";
+		String sql = "SELECT m.username,m.touxiangimg,m.id FROM movie_user m WHERE m.id IN(SELECT uid FROM private_message WHERE fid = :uid)";
 		List<Object[]> list = getSession().createSQLQuery(sql).setParameter("uid", uid).list();
 		
 		List<User> lUsers = new ArrayList<User>();

@@ -44,7 +44,10 @@ body {
 						<div class="row">
 							<div class="col-xs-2"
 								style="padding-left: 5px;width: 110px;overflow: hidden">
+								<a style="cursor: pointer;"
+									href="./search?q=${douban.movieName}">
 								<img class="doubanimg" src="${douban.movieUrl}">
+								</a>
 							</div>
 							<div class="col-xs-10">
 								<a style="cursor: pointer;"

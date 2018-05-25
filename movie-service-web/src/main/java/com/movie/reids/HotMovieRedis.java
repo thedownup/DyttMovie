@@ -42,6 +42,8 @@ public class HotMovieRedis extends BaseRedis{
 		Jedis jedis = getJedis();
 		
 		Movie movie = movieService.getMovieById(hotMovie.getId());
+		
+		
 		if (movie == null) {
 			throw new Exception("没有此id的电影");
 		}
@@ -51,7 +53,14 @@ public class HotMovieRedis extends BaseRedis{
 		hotMovie.setMovieName(movie.getMovieName());
 		hotMovie.setMovieImgUrl(movie.getMovieImgUrl());
 		hotMovie.setYear(movie.getYear());
+
+		//设置属性
 		
+		if (movie.getType() != null || movie.getType().contains(" ")) {
+			hotMovie.setType(movie.getType().replaceAll(" ", "/"));
+		}
+		hotMovie.setClarity(movie.getClarity());
+		hotMovie.setArea(movie.getArea());
 		
 		String json = JsonUtils.objectToJson(hotMovie);
 		jedis.zadd(HOTMOVIENAME, Double.parseDouble(hotMovie.getScore()), json);	
@@ -64,11 +73,11 @@ public class HotMovieRedis extends BaseRedis{
 	 * @param rolling
 	 */
 	public void updateHotMovie(HotMovie hotMovie,double newScore){
-
+		
 		Jedis jedis = getJedis();
 		Set<String> set = jedis.zrangeByScore(HOTMOVIENAME, hotMovie.getScore(), hotMovie.getScore());
 		String json = JsonUtils.objectToJson(hotMovie);
-		logger.debug(json);
+		System.out.println(json);
 		for (String value : set) {
 			logger.debug(value);
 			if (json.equals(value)) {
@@ -86,8 +95,10 @@ public class HotMovieRedis extends BaseRedis{
 	 * @param id
 	 */
 	public void deleteHotMovie(HotMovie hotMovie){
+		System.out.println(hotMovie.toString());
 		Jedis jedis = getJedis();
 		jedis.zrem(HOTMOVIENAME,String.valueOf(hotMovie.getScore()),JsonUtils.objectToJson(hotMovie));
+		System.out.println(JsonUtils.objectToJson(hotMovie));
 		jedis.close();
 	}
 	
@@ -106,15 +117,14 @@ public class HotMovieRedis extends BaseRedis{
 		
 		List<HotMovie> lists = new ArrayList<HotMovie>();
 		
-		int count = 0;
+		if (zrevrange.size() > 50) {
+			jedis.zremrangeByRank(HOTMOVIENAME, 0, zrevrange.size()-51);
+		}
+		
 		//最多显示50条
 		for (String value : zrevrange) {
-			count++;
 			HotMovie hotMovie = JsonUtils.jsonToPojo(value, HotMovie.class);
 			lists.add(hotMovie);
-			if (count > 50) {
-				break;
-			}
 		}
 		
 		easyUIDataGridResult.setRows(lists);

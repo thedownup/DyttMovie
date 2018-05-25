@@ -43,7 +43,7 @@ div {
 				<div class="col-xs-12 user-zone-cover" style="background: #EEE url(${session.user.backImg}) ">
 					<div class="user-portrait">
 						<a class="user-avatar" href=""><img
-							src="${session.user.touXiangImg}" height="88px" width="88px"></a>
+							src="${session.user.touXiangImg}" height="88px" width="88px"  onerror="this.onerror=null; this.src='../image/noimage.png'" ></a>
 						<div class="user-name">${session.user.userName}</div>
 					</div>
 					<!-- <a id="beijing" href="javascript:;"
@@ -72,7 +72,7 @@ div {
 							<div class="panel-body" style="padding:10px;">
 								<c:forEach items="${focusUsers}" var="fs">
 									<a data-toggle="popover" data-user-id="${fs.uid}" style="padding:5px;" target="_blank" href="./otherzhuye?uid=${fs.uid}" class="col-xs-1 viewer-list-avatar">
-	   									 <img height="55px" width="100%" src="${fs.touXianImg}">
+	   									 <img height="55px" width="100%" src="${fs.touXianImg}" onerror="this.onerror=null; this.src='../image/noimage.png'">
 									</a>
 								</c:forEach>
 							</div>
@@ -181,7 +181,7 @@ div {
 		for(var i = 0;i<data.objects.length;i++){
 			var html = '<div class="col-xs-3 movie-item">'+
                     '<a style="position:relative;display:block;" title="'+data.objects[i].movieName+'\" target="_blank" href=\"'+"./movieinfo?mid="+data.objects[i].id+'\">'+
-                    '<img alt="'+data.objects[i].movieName+'\" title="'+ data.objects[i].movieName+'\" src="'+data.objects[i].movieImgUrl+'\">'+
+                    '<img onerror="this.onerror=null; this.src=\'../image/noimage.png\'" alt="'+data.objects[i].movieName+'\" title="'+ data.objects[i].movieName+'\" src="'+data.objects[i].movieImgUrl+'\">'+
                     '<div class="item-hover"></div>'+
                     '</a>'+
                     '<div class="meta">'+

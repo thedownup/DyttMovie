@@ -18,6 +18,18 @@
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="./bootstrap-3.3.7/dist/js/bootstrap.js"></script>
 <script src="./js/bootstrap-paginator.min.js"></script>
+  <style type="text/css">
+        body{
+            font-size: 14px;
+            font-family: 'HanHei SC', 'PingFang SC', 'Helvetica Neue', 'Helvetica',
+            'Microsoft YaHei', 'WenQuanYi Micro Hei', 'STHeitiSC-Light',
+            'Arial', 'Segoe UI', sans-serif;
+            background: rgb(245,245,245);
+        }
+        div{
+            display: block;
+        }
+    </style>
 </head>
 <body>
 
@@ -67,37 +79,24 @@
 								  <a href="#" class="tag" data-value="传记">传记</a> 
 								  <a href="#" class="tag" data-value="喜剧">喜剧</a> 
 								  <a href="#" class="tag" data-value="剧情">剧情</a> 
-								  <a href="#" class="tag" data-value="枪战">枪战</a> 
 								  <a href="#" class="tag" data-value="恐怖">恐怖</a> 
-								  <a href="#" class="tag" data-value="励志">励志</a> 
 								  <a href="#" class="tag" data-value="动画">动画</a> 
 								  <a href="#" class="tag" data-value="歌舞">歌舞</a> 
-								  <a href="#" class="tag" data-value="罪案">罪案</a> 
-								  <a href="#" class="tag" data-value="偶像">偶像</a> 
 								  <a href="#" class="tag" data-value="悬疑">悬疑</a> 
 								  <a href="#" class="tag" data-value="爱情">爱情</a> 
 								  <a href="#" class="tag" data-value="惊悚">惊悚</a> 
-								  <a href="#" class="tag" data-value="综艺">综艺</a> 
+								  <a href="#" class="tag" data-value="真人秀">综艺</a> 
 								  <a href="#" class="tag" data-value="纪录">纪录</a> 
 								  <a href="#" class="tag" data-value="青春">青春</a> 
 								  <a href="#" class="tag" data-value="科幻">科幻</a> 
 								  <a href="#" class="tag" data-value="冒险">冒险</a> 
-								  <a href="#" class="tag" data-value="魔幻">魔幻</a> 
-								  <a href="#" class="tag" data-value="丧尸">丧尸</a> 
+								  <a href="#" class="tag" data-value="奇幻">魔幻</a> 
 								  <a href="#" class="tag" data-value="动作">动作</a> 
-								  <a href="#" class="tag" data-value="幻想">幻想</a> 
 								  <a href="#" class="tag" data-value="战争">战争</a> 
 								  <a href="#" class="tag" data-value="情色">情色</a> 
-								  <a href="#" class="tag" data-value="血腥">血腥</a> 
-								  <a href="#" class="tag" data-value="西部">西部</a> 
-								  <a href="#" class="tag" data-value="童话">童话</a> 
-								  <a href="#" class="tag" data-value="暴力">暴力</a> 
 								  <a href="#" class="tag" data-value="古装">古装</a> 
 								  <a href="#" class="tag" data-value="灾难">灾难</a> 
-								  <a href="#" class="tag" data-value="谍战">谍战</a> 
-								  <a href="#" class="tag" data-value="生活">生活</a> 
-								  <a href="#" class="tag" data-value="讽刺">讽刺</a> 
-								  <a href="#" class="tag" data-value="其他">其他</a> 
+								  <a href="#" class="tag" data-value="纪录片">纪录片</a> 
 								  <a href="#" class="tag" data-value="同性">同性</a> 
 							</td>
 						</tr>
@@ -113,13 +112,19 @@
 							<div class="col-xs-1-5 col-sm-4 col-xs-6 movie-item">
 								<div class="movie-item-in">
 									<a class="item-a" target="_blank" style="position:relative;display:block;" href="./movieinfo?mid=${movie.id}"> <img
-									src="${movie.movieImgUrl}" > <!--清晰度--> <c:set
-										var="clarity" scope="request" value="${movie.clarity}" /> <c:if
-										test="${clarity == '高清'}">
-										<span class="gqtag">高清</span>
-									</c:if> <c:if test="${clarity == '超清'}">
-										<span class="cltag">超清</span>
-									</c:if>
+									src="${movie.movieImgUrl}" onerror="this.onerror=null; this.src='./pmovie/../noimage.png'"> <!--清晰度--> <c:set
+										var="clarity" scope="request" value="${movie.clarity}" /> 
+										<c:choose>
+											<c:when test="${clarity == '高清'}">
+												<span class="cltag">高清</span>
+											</c:when>
+											<c:when test="${clarity == '超清'}">
+												<span class="gqtag">超清</span>
+											</c:when>
+											<c:otherwise>
+												<span class="otag">${movie.clarity}</span>
+											</c:otherwise>
+										</c:choose>
 								</a>
 								<!--列表小简介-->
 								<div class="meta">

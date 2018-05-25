@@ -1,16 +1,12 @@
 package com.movie.task;
 
-import java.time.Instant;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.movie.reids.RedisHelper;
 import com.movie.service.ProxyIpPoolService;
-import javassist.expr.NewArray;
 
 /**
  * 

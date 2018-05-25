@@ -79,6 +79,7 @@ public class CommentsAction extends BaseAction<Comments>{
 		List<ReplyInner> replyInners = new ArrayList<ReplyInner>();
 		for (Comments comments : comment) {
 			ReplyInner replyInner = new ReplyInner();
+			replyInner.setId(comments.getUser().getId());
 			replyInner.setDate(comments.getSendDate());
 			replyInner.setMessage(comments.getMessage());
 			replyInner.setName(comments.getUser().getUserName());

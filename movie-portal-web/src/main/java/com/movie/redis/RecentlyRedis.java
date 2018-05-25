@@ -27,23 +27,9 @@ public class RecentlyRedis extends BaseRedis{
 	public HashMap<String, String> getRecentlyWatchUser(String mid){
 		Jedis jedis = getJedis();
 		//最大设置数量为8个
-		long num = 0;
 		if (jedis.hlen(RECENTLYWATCH) == null || jedis.hlen(RECENTLYWATCH) == 0) { jedis.close();return null;}
-		else {num = jedis.hlen(RECENTLYWATCH);}
-		/*if (num > 8) {
-			Set<String> set = jedis.hkeys(RECENTLYWATCH);
-			Iterator<String> iterator = set.iterator();
-			long count = num - RNUM;
-			while(iterator.hasNext()){
-				count--;
-				set.remove(iterator.next());
-				if (count == 0) {
-					break;
-				}
-			}
-		}*/
-		
 		if (jedis.hget(RECENTLYWATCH, mid) == null) {
+			jedis.close();
 			return null;
 		}
 		String json = jedis.hget(RECENTLYWATCH, mid);
@@ -73,10 +59,11 @@ public class RecentlyRedis extends BaseRedis{
 		}
 		
 		String befRecordUser = jedis.hget(RECENTLYWATCH, mid);
-		HashMap hashMap = JsonUtils.jsonToPojo(befRecordUser, HashMap.class);
+		HashMap<String, String> hashMap = JsonUtils.jsonToPojo(befRecordUser, HashMap.class);
 		hashMap.put(uid, touxiang);
 		jedis.hset(RECENTLYWATCH, mid, JsonUtils.objectToJson(hashMap));
 		jedis.close();
 		
 	}
+	
 }

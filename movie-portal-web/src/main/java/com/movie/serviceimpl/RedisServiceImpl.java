@@ -2,32 +2,21 @@ package com.movie.serviceimpl;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.movie.pojo.RecentlyMovie;
+import com.movie.redis.BaseRedis;
 import com.movie.service.RedisService;
 import com.movie.untils.JsonUtils;
 
 import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
 
 @Service
-public class RedisServiceImpl implements RedisService{
+public class RedisServiceImpl extends BaseRedis implements RedisService{
 
-	private static final Logger logger = Logger.getLogger(RedisServiceImpl.class);
-	
-	@Autowired
-	private JedisPool jedisPool;
 	@Value("${RSIZE}")
 	private int size;
-
-	public Jedis getJedis(){
-		Jedis jedis = jedisPool.getResource();
-		return jedis;
-	}
 
 	@Override
 	public void saveRecentlyMovies(int uid,int mid,String movieName){

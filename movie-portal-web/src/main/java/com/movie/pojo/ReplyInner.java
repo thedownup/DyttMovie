@@ -3,6 +3,9 @@ package com.movie.pojo;
 import java.io.Serializable;
 
 public class ReplyInner implements Serializable {
+	
+
+	private int id;
 	private String date;
 	private String name;
 	private String message;
@@ -24,6 +27,15 @@ public class ReplyInner implements Serializable {
 		return touxiangUrl;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	
 	public void setDate(String date) {
 		this.date = date;
 	}

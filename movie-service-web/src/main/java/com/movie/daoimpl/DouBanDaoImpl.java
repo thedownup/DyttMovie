@@ -19,11 +19,8 @@ public class DouBanDaoImpl extends BaseDaoImpl<DouBan> implements DouBanDao {
 	public void updatxDouBan() {
 
 		Transaction beginTransaction = getSession().beginTransaction();
-
 		//先清空数据库
 		getSession().createSQLQuery("TRUNCATE TABLE douban").executeUpdate();
-		//先清空表
-		getSession().createSQLQuery("truncate table DouBan").executeUpdate();
 		try {
 			for (int i = 1; i <= 10; i++) {
 				String url = "http://www.id97.com/movie/top250_douban?page="+i;
@@ -55,7 +52,7 @@ public class DouBanDaoImpl extends BaseDaoImpl<DouBan> implements DouBanDao {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			updatxDouBan();
 		} 
 
 		beginTransaction.commit();

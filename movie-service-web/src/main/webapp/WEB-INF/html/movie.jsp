@@ -98,7 +98,7 @@
 				<tr>
 					<td width="60" align="right">创建日期:</td>
 					<td><input type="text" name="date" id="ccu"
-						class="wu-text easyui-validatebox easyui-datebox" /></td>
+						class="wu-text easyui-validatebox easyui-datetimebox" /></td>
 				</tr>
 				<tr>
 					<td width="60" align="right">上映年份:</td>
@@ -300,7 +300,7 @@
 					modal : true,
 				});
 				/* 初始化日期 */
-				$('#ccu').datebox('setValue',movie[0].date);	
+				$('#ccu').datetimebox('setValue',movie[0].date);	
 				$("#change_movie").dialog('open');
 			}
 		}

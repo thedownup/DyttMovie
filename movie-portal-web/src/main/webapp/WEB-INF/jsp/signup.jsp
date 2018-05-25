@@ -72,6 +72,7 @@
 		             data: $("#signup-form").serialize(),
 		             dataType: "json",
 		             success: function(data){
+		             	alert(data);
 						if (data == "注册成功"){
 							alert(" 跳转到登陆页面");
 							location = "./signin";

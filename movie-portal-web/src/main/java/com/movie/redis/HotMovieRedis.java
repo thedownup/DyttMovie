@@ -33,8 +33,8 @@ public class HotMovieRedis extends BaseRedis{
 	public List<HotMovie> getHotMovie(){
 
 		Jedis jedis = getJedis();
-		
-		Set<String> zrevrange = jedis.zrangeByScore(HOTMOVIENAME, 0, 9999);
+		//ZREVRANK 返回有序集合中指定成员的排名，有序集成员按分数值递减(从大到小)排序
+		Set<String> zrevrange = jedis.zrevrange(HOTMOVIENAME, 0, 9999);
 		
 		List<HotMovie> lists = new ArrayList<HotMovie>();
 		
@@ -48,7 +48,7 @@ public class HotMovieRedis extends BaseRedis{
 				break;
 			}
 		}
-		jedis.close();
+		/*jedis.close();*/
 		return lists;
 	}
 }

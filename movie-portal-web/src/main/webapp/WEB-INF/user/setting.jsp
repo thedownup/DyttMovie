@@ -123,10 +123,10 @@ div {
 							<div class="panel-heading">邮箱验证</div>
 							<div class="panel-body">
 								<c:if test="${session.user.state == '1'}">
-									632443784 --<strong style="color: green;">已认证</strong>
+									${session.user.email} --<strong style="color: green;">已认证</strong>
 								</c:if>
 								<c:if test="${session.user.state != '1'}">
-									632443784 --<strong style="color: red;">未认证</strong> -- <a
+									${session.user.email} --<strong style="color: red;">未认证</strong> -- <a
 										id="sendMail" href="#">发送验证邮箱</a>
 								</c:if>
 							</div>
@@ -138,7 +138,7 @@ div {
 								<form id="changePassword" method="post" role="form" >
 									<div class="form-group">
 										<label>旧密码</label> <input type="passWord" class="form-control"
-											name="passWord">
+										name="passWord">
 									</div>
 									<div class="form-group">
 										<label>新密码</label> <input id="firstPassword" type="passWord"
@@ -146,7 +146,7 @@ div {
 									</div>
 									<div class="form-group">
 										<label>新密码</label> <input id="secondPassword" type="password"
-											class="form-control" name="newPassword">
+											class="form-control">
 									</div>
 									<div class="form-group">
 										<button type="button" id="savePassword" class="btn btn-primary pull-right">保存资料</button>

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.movie.actionimpl.PageAction;
 import com.movie.pojo.HotMovie;
 import com.movie.redis.HotMovieRedis;
 import com.movie.redis.RecentlyRedis;
@@ -31,6 +32,8 @@ public class RedisTest {
 	private RecentlyRedis recentlyRedis;
 	@Autowired
 	private JedisPool jedisPool;
+	@Autowired
+	private PageAction pageAction;
 	
 	@Test
 	public void testRedis() throws InterruptedException{
@@ -89,5 +92,20 @@ public class RedisTest {
 		List<String> recentlyMovies = redisService.getRecentlyMovies(218);
 		recentlyMovies.forEach(System.out::println);
 	}
+	
+	@Test
+	public void testRedisReliable(){
+		int i = 0;
+		while(true){
+			try {
+				pageAction.index();
+				System.out.println(i++);
+				Thread.sleep(3_000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 	
 }

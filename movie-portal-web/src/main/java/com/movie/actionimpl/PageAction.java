@@ -32,7 +32,7 @@ import com.opensymphony.xwork2.ModelDriven;
 public class PageAction extends ActionSupport implements RequestAware,ModelDriven<FilterTag>{
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Autowired
 	private SingleMovieService singleMovieService;
 	@Autowired
@@ -48,7 +48,7 @@ public class PageAction extends ActionSupport implements RequestAware,ModelDrive
 	private int page;
 	private String uid;
 	private String rd;
-	
+
 	private FilterTag filterTag;
 	private Map<String, Object> request;
 	public int getNum() {
@@ -64,7 +64,7 @@ public class PageAction extends ActionSupport implements RequestAware,ModelDrive
 		this.page = page;
 	}
 
-	
+
 	/**
 	 * 首页
 	 * @return
@@ -89,10 +89,10 @@ public class PageAction extends ActionSupport implements RequestAware,ModelDrive
 		if (page == 0) {
 			page++;
 		}
-		
+
 		setDefaultFilterTag();
 		NObject nObject = singleMovieService.getMovies(page,num,filterTag);
-		
+
 		//设置分页总数
 		request.put("pageNum", getPageNum(nObject.getNum(), 0));
 		@SuppressWarnings("unchecked")
@@ -109,8 +109,8 @@ public class PageAction extends ActionSupport implements RequestAware,ModelDrive
 
 		return "movie";
 	}
-	
-	
+
+
 	private int getPageNum(int count,int pageNum){
 		if (count % num == 0) {
 			pageNum = count/num;
@@ -119,7 +119,7 @@ public class PageAction extends ActionSupport implements RequestAware,ModelDrive
 		}
 		return pageNum;
 	}
-	
+
 
 	private void setDefaultFilterTag(){
 
@@ -149,38 +149,43 @@ public class PageAction extends ActionSupport implements RequestAware,ModelDrive
 	public String tv() {
 		return "tv";
 	}
-	
+
 	/**
 	 * 他人页面
 	 * @return
 	 */
 	public String otherzhuye() {
-		
+
 		boolean matches = Pattern.compile("^[-\\+]?[\\d]*$").matcher(uid).matches();
 		if (matches == false) {
 			return Action.ERROR;
 		}
 
-		User ouser = userService.getUserById(Integer.valueOf(uid));
-		request.put("ouser", ouser);
+		if (uid == null || uid.equals("")) {
+			return Action.ERROR;
+		}
 		
-	
+		User ouser = userService.getUserById(Integer.valueOf(uid));
+		if (ouser == null) {
+			return "nouser";
+		}
+		request.put("ouser", ouser);
 		return "otherzhuye";
 	}
-	
+
 	/**
 	 *	豆瓣的页面 
 	 * @return
 	 */
 	public String douban250() {
 		if (page == 0) {
-			page++;
+			page = 1;
 		}
-		
+
 		List<DouBan> douBan = douBanService.getDouBan(page);
 		request.put("page", page);
 		request.put("doubans", douBan);
-		
+
 		return "douban250";
 	}
 
@@ -199,24 +204,24 @@ public class PageAction extends ActionSupport implements RequestAware,ModelDrive
 	public String error(){
 		return "error";
 	}
-	
+
 	public String getUid() {
 		return uid;
 	}
-	
-	
+
+
 	public String getRd() {
 		return rd;
 	}
-	
+
 	public void setRd(String rd) {
 		this.rd = rd;
 	}
-	
+
 	public void setUid(String uid) {
 		this.uid = uid;
 	}
-	
+
 	@Override
 	public void setRequest(Map<String, Object> request) {
 		this.request = request;

@@ -19,8 +19,6 @@ import redis.clients.jedis.Jedis;
 public class RollingRedis extends BaseRedis{
 	
 	private static final String ROLLINGNAME = "Rolling";
-	private static final String ROLLINGID = "rid";
-	
 	
 	public List<Rolling> getRolling(){
 		

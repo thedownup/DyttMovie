@@ -40,7 +40,7 @@ public class MovieInfo implements Serializable {
 		return alias;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, mappedBy = "movieInfo")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST, mappedBy = "movieInfo")
 	public Set<Comments> getComments() {
 		return comments;
 	}
