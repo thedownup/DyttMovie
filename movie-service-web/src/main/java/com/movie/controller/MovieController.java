@@ -15,7 +15,7 @@ import com.movie.service.MovieService;
 
 /**
  * @author zjt
- * @Description: 电影方面
+ * @Description: 电影增删改
  */
 @Controller
 @RequestMapping("/movie")
